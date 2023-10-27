@@ -16,12 +16,9 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="flex gap-4 items-center">
-            <Button variant="ghost" asChild>
-              <Link href="/login ">Login</Link>
-            </Button>
             <Button asChild>
-              <Link href="/signup">
-                Signup
+              <Link href="/login">
+                Connexion
                 <ArrowRight width={16} strokeWidth={3} />
               </Link>
             </Button>
@@ -29,13 +26,13 @@ export default function LandingPage() {
         </div>
       </header>
       <main className="flex flex-1 justify-center items-center px-10 pt-32 pb-20 sm:pb-32 sm:pt-48 xl:px-36 flex-col">
-        <h1 className="text-3xl font-bold tracking-tight delay-500 sm:text-8xl mb-10">
+        <div className="text-3xl font-bold tracking-tight delay-500 sm:text-7xl mb-10">
           L'app qui rapproche
           <br />
           vos collaborateurs
           <br />
           sur la route du bureau !
-        </h1>
+        </div>
         <div className="flex bg-white rounded-3xl p-2 mt-10 h-[720px] w-[1220px]">
           <Image
             src="/31611.jpg"
