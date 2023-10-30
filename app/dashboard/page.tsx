@@ -1,9 +1,9 @@
-import { SideBar } from "@/components/SideBar";
-import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
-import { MessageCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { SideBar } from '@/components/SideBar'
+import { Input } from '@/components/ui/input'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Separator } from '@/components/ui/separator'
+import { MessageCircle } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 export default function DashboardPage() {
   return (
@@ -35,7 +35,7 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function Match() {
@@ -55,5 +55,5 @@ function Match() {
         <MessageCircle />
       </Button>
     </div>
-  );
+  )
 }

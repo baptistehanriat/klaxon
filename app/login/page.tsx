@@ -1,9 +1,9 @@
-import { Logo } from "@/components/Logo";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import { Logo } from '@/components/Logo'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/separator'
+import Link from 'next/link'
+import { ChevronLeft } from 'lucide-react'
 
 export default function LoginPage() {
   return (
@@ -18,7 +18,7 @@ export default function LoginPage() {
           <Link href="/">
             <ChevronLeft className="h-4 w-4" />
           </Link>
-        </Button>{" "}
+        </Button>
         <Logo />
         <div className="text-2xl font-bold mb-10 mt-5">Se connecter</div>
         <div className="flex flex-col w-full">
@@ -31,7 +31,7 @@ export default function LoginPage() {
           </label>
           <Input id="password" name="password" type="password" />
           <Link className="text-xs text-indigo-500 mt-1" href="/help">
-            Mot de passe oublié ?{" "}
+            Mot de passe oublié ?{' '}
           </Link>
           <Button className="w-full mt-5" asChild>
             <Link href="/dashboard">Se connecter</Link>
@@ -44,5 +44,5 @@ export default function LoginPage() {
         </Button>
       </main>
     </section>
-  );
+  )
 }

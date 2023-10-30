@@ -1,3 +1,3 @@
 export default function HelpPage() {
-  return <div>Help page</div>;
+  return <div>Help page</div>
 }

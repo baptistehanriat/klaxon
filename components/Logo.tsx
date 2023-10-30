@@ -15,5 +15,5 @@ export function Logo() {
         clipRule="evenodd"
       ></path>
     </svg>
-  );
+  )
 }
