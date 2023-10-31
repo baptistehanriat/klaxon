@@ -6,8 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Combobox } from '@/components/ui/combobox'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
-import useAddressAutofill from '@/components/useAddressAutofill'
-import { useData } from '@/components/useData'
+import { useAddressAutofill } from '@/components/useAddressAutofill'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -128,24 +127,12 @@ function Password({ onContinue, onChange, signupData }: StepContentProps) {
 }
 
 function Commute({ onContinue, onChange, signupData }: StepContentProps) {
-  const { suggestions, autofill } = useAddressAutofill()
-  const [inputValue, setInputValue] = useState('')
-
-  useEffect(() => {
-    if (inputValue.length > 2) {
-      autofill(inputValue, {
-        accessToken:
-          'pk.eyJ1IjoiYmhhbnJpYXQiLCJhIjoiY2xvYm16enVxMHhqbjJpcWJyd2YxeG9xeSJ9.F2FaVYEaHFEf52zqrjuEVw',
-      })
-    }
-  }, [inputValue, autofill])
-
-  console.log(suggestions)
   return (
     <div className="flex flex-col">
-      <div>
-        <AddressPicker />
-      </div>
+      <label htmlFor="home-address" className="text-gray-400 text-sm mb-1">
+        Votre point de départ
+      </label>
+      <AddressPicker />
       <label htmlFor="office-address" className="text-gray-400 text-sm mb-1">
         L'agence où vous travaillez
       </label>

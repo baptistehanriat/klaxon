@@ -1,9 +1,9 @@
 'use client'
 
-import * as React from 'react'
-import useAddressAutofill from '@/components/useAddressAutofill'
 import { Input } from '@/components/ui/input'
+import { useAddressAutofill } from '@/components/useAddressAutofill'
 import { cn } from '@/lib/utils'
+import * as React from 'react'
 
 export function AddressPicker() {
   const [inputValue, setInputValue] = React.useState('')
@@ -22,7 +22,7 @@ export function AddressPicker() {
     } else if (event.key === 'ArrowUp' && activeSuggestionIndex > 0) {
       setActiveSuggestionIndex((prev: number) => prev - 1)
     } else if (event.key === 'Enter' && activeSuggestionIndex > -1) {
-      setInputValue(suggestions[activeSuggestionIndex].place_name)
+      setInputValue(suggestions[activeSuggestionIndex].fullAddress)
       inputRef.current?.blur()
     } else if (event.key === 'Escape') {
       inputRef.current?.blur()
@@ -31,9 +31,7 @@ export function AddressPicker() {
 
   React.useEffect(() => {
     if (inputValue.length > 2) {
-      autofill(inputValue, {
-        accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!,
-      })
+      autofill(inputValue)
     }
   }, [inputValue, autofill])
 
@@ -51,7 +49,7 @@ export function AddressPicker() {
         aria-controls="suggestions-list"
         aria-activedescendant={
           activeSuggestionIndex > -1
-            ? suggestions[activeSuggestionIndex].place_name
+            ? suggestions[activeSuggestionIndex].fullAddress
             : undefined
         }
       />
@@ -62,12 +60,12 @@ export function AddressPicker() {
         >
           {suggestions.map((suggestion, index) => (
             <li
-              key={suggestion.mapbox_id}
+              key={suggestion.id}
               role="option"
               aria-selected={index === activeSuggestionIndex}
               onMouseDown={(e) => {
                 e.preventDefault()
-                setInputValue(suggestion.place_name)
+                setInputValue(suggestion.fullAddress)
                 inputRef.current?.blur()
               }}
               className={cn(
@@ -77,7 +75,7 @@ export function AddressPicker() {
                   : 'hover:bg-gray-100 bg-white',
               )}
             >
-              {suggestion.place_name}
+              {suggestion.fullAddress}
             </li>
           ))}
         </ul>

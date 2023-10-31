@@ -1,0 +1,17 @@
+export const FakeOfficeAddresses = [
+  '12 Rue des Bouchers, 67000 Strasbourg',
+  '88 Avenue des Ternes, 75017 Paris',
+  '45 Rue Nationale, 59000 Lille',
+  '37 Boulevard Dubouchage, 06000 Nice',
+  '29 Cours Mirabeau, 13100 Aix-en-Provence',
+  '23 Rue de la République, 69002 Lyon',
+  '56 Rue du Taur, 31000 Toulouse',
+  '71 Rue Saint-Aubert, 62000 Arras',
+  '102 Rue de Bordeaux, 16000 Angoulême',
+  '8 Rue de la Poissonnerie, 64100 Bayonne',
+  '33 Boulevard Heurteloup, 37000 Tours',
+  '18 Rue des Gras, 63000 Clermont-Ferrand',
+  '42 Rue du Palais Gallien, 33000 Bordeaux',
+  '17 Rue des Changes, 28000 Chartres',
+  '26 Rue Saint-Guilhem, 34000 Montpellier',
+]
