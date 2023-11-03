@@ -1,20 +1,14 @@
-import { SideBar } from '@/components/SideBar'
-import { Input } from '@/components/ui/input'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Separator } from '@/components/ui/separator'
-import { MessageCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import {
-  HomeIcon,
-  ChatBubbleBottomCenterTextIcon,
-  BuildingOfficeIcon,
-  ClockIcon,
-} from '@heroicons/react/24/solid'
-import { Home, Building2, ChevronsRight, Car } from 'lucide-react'
 import { AppBar } from '@/components/AppBar'
-import { Slider } from '@/components/ui/slider'
-import { EditCommuteDialog } from '@/components/EditCommuteDialog'
 import { Badge } from '@/components/Badge'
+import { EditCommuteDialog } from '@/components/EditCommuteDialog'
+import { Avatar } from '@/components/ui/avatar'
+import {
+  BuildingOfficeIcon,
+  ChatBubbleBottomCenterTextIcon,
+  ClockIcon,
+  HomeIcon,
+} from '@heroicons/react/24/solid'
+import { Car } from 'lucide-react'
 
 export default function DashboardPage() {
   return (

@@ -1,8 +1,8 @@
-import { Logo } from "@/components/Logo";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Logo } from '@/components/Logo'
+import { Button } from '@/components/ui/button'
+import { ArrowRight } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function LandingPage() {
   return (
@@ -38,12 +38,12 @@ export default function LandingPage() {
             src="/31611.jpg"
             width={1220}
             height={720}
-            style={{ objectFit: "contain" }}
+            style={{ objectFit: 'contain' }}
             alt="Picture of the author"
           />
         </div>
       </main>
       <footer></footer>
     </section>
-  );
+  )
 }

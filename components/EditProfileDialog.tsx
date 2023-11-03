@@ -34,9 +34,8 @@ export function ProfileDialog(props: Props) {
           <label htmlFor="home-address" className="text-gray-400 text-sm mb-1">
             Votre prénom
           </label>
-          <Input value="Baptiste" />
-          <AddressPicker />
-          <DialogClose>
+          <Input />
+          <DialogClose asChild>
             <div className="flex justify-end items-center gap-4">
               <Button variant="secondary">Annuler</Button>
               <Button>Sauvegarder</Button>

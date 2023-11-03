@@ -5,7 +5,13 @@ import { useAddressAutofill } from '@/components/useAddressAutofill'
 import { cn } from '@/lib/utils'
 import * as React from 'react'
 
-export function AddressPicker() {
+export function AddressPicker({
+  onChange,
+  errorMessage,
+}: {
+  onChange: (value: string) => void
+  errorMessage?: string
+}) {
   const [inputValue, setInputValue] = React.useState('')
   const { suggestions, autofill } = useAddressAutofill()
   const [activeSuggestionIndex, setActiveSuggestionIndex] = React.useState(-1)
@@ -36,13 +42,19 @@ export function AddressPicker() {
   }, [inputValue, autofill])
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <Input
+        id="home-address"
+        name="home-address"
+        errorMessage={errorMessage}
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onFocus={() => setIsEditing(true)}
-        onBlur={() => setIsEditing(false)}
+        onBlur={() => {
+          setIsEditing(false)
+          onChange(inputValue)
+        }}
         onKeyDown={handleKeyDown}
         ref={inputRef}
         aria-autocomplete="list"
