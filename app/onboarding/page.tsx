@@ -1,16 +1,16 @@
 'use client'
 
 import { Logo } from '@/components/Logo'
-import { StepIndicators } from '@/components/onboarding/StepIndicators'
 import { SetCommute } from '@/components/onboarding/SetCommute'
-import { SetPassword } from '@/components/onboarding/SetPassword'
 import { SetDetour } from '@/components/onboarding/SetDetour'
+import { SetName } from '@/components/onboarding/SetName'
+import { SetPassword } from '@/components/onboarding/SetPassword'
+import { StepIndicators } from '@/components/onboarding/StepIndicators'
 import {
-  useOnboardingForm,
   STEPS,
+  useOnboardingForm,
 } from '@/components/onboarding/useOnboardingForm'
 import { Button } from '@/components/ui/button'
-import { SetName } from '@/components/onboarding/SetName'
 
 export default function OnboardingPage() {
   const { data, setFieldValue, currentStep, onSubmit } = useOnboardingForm()

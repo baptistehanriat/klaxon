@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export { useOnboardingForm, type FormData, STEPS }
 
@@ -54,10 +54,10 @@ const useOnboardingForm = () => {
   const onSubmit = () => {
     const isStepValid = validateStep(currentStep)
 
-    if (currentStep !== 'profile') {
-      const nextStep = STEPS[STEPS.indexOf(currentStep) + 1]
-      if (isStepValid) setOnboardingStep(nextStep)
-    }
+    if (currentStep === 'profile') return
+
+    const nextStep = STEPS[STEPS.indexOf(currentStep) + 1]
+    if (isStepValid) setOnboardingStep(nextStep)
   }
 
   const setFieldValue = (field: keyof FormData, value?: string | number) => {
@@ -113,6 +113,21 @@ const useOnboardingForm = () => {
     setData(updatedData)
     return isValid
   }
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      event.returnValue = '' // A string is required for cross-browser compatibility
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    // window.addEventListener('popstate', handleNavigation)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      // window.removeEventListener('popstate', handleNavigation)
+    }
+  }, [])
 
   return {
     data,

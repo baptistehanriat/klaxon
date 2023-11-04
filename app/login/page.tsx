@@ -7,8 +7,8 @@ import { ChevronLeft } from 'lucide-react'
 
 export default function LoginPage() {
   return (
-    <section className="relative flex h-screen  items-center justify-center flex-col ">
-      <main className="flex flex-col justify-center items-center sm:w-[350px] ">
+    <section className="relative flex flex-col sm:min-h-screen max-h-screen justify-center items-center px-6 pt-16 sm:p-0">
+      <main className="flex flex-col w-full sm:max-w-[336px] items-center">
         <Button
           asChild
           variant="outline"

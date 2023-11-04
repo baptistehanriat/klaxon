@@ -13,22 +13,25 @@ import { Combobox } from './ui/combobox'
 import { Slider } from './ui/slider'
 import { Button } from './ui/button'
 import { DialogClose } from '@radix-ui/react-dialog'
+import { PencilSquareIcon } from '@heroicons/react/24/solid'
+import { ComboboxText } from './ComboboxTest'
 
 export function EditCommuteDialog() {
   return (
     <Dialog>
       <DialogTrigger>
-        <p className="text-sm text-gray-500">Modifier</p>
+        <p className="text-sm">Modifier mon trajet</p>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Modifier mon trajet</DialogTitle>
+          <DialogClose></DialogClose>
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <label htmlFor="home-address" className="text-gray-400 text-sm mb-1">
             Votre point de départ
           </label>
-          <AddressPicker />
+          <AddressPicker onChange={() => {}} />
           <label
             htmlFor="office-address"
             className="text-gray-400 text-sm mb-1"
@@ -50,6 +53,11 @@ export function EditCommuteDialog() {
             Le temps de détour maximum
           </label>
           <Slider />
+
+          <ComboboxText onOpenProfileDialog={() => {}} />
+          <AddressPicker onChange={() => {}} />
+          <AddressPicker onChange={() => {}} />
+          <AddressPicker onChange={() => {}} />
           <DialogClose>
             <div className="flex justify-end items-center gap-4">
               <Button variant="secondary">Annuler</Button>

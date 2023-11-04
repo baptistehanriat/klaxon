@@ -18,8 +18,10 @@ export default function DashboardPage() {
         <div className="flex flex-col w-[1000px] ">
           <div className="text-3xl my-10 font-bold">Bonjour Baptiste</div>
           <div className="bg-[#f9f8f3] p-12 rounded-3xl  ">
-            <div className="flex justify-between">
-              <div className="text-2xl font-bold mb-8">Votre trajet</div>
+            <div className="flex justify-between items-center mb-8">
+              <p className="flex items-center text-2xl font-bold">
+                Votre trajet
+              </p>
               <EditCommuteDialog />
             </div>
             <div className="flex justify-between items-center">
