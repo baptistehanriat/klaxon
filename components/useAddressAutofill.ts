@@ -29,6 +29,7 @@ export const useAddressAutofill = (): UseAddressAutofillReturn => {
           },
         },
       )
+      console.log('response', response)
 
       setSuggestions(
         response.data.features.map((feature: any) => ({

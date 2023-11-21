@@ -17,6 +17,9 @@ import { UserCircleIcon } from '@heroicons/react/24/outline'
 
 import { DropdownMenuGroup, DropdownMenuItem } from './ui/dropdown-menu'
 import { Input } from './ui/input'
+import { useUser } from '@/lib/useUser'
+import { useState } from 'react'
+import { updateName } from '@/lib/updateName'
 
 interface Props {
   isOpen: boolean
@@ -24,6 +27,9 @@ interface Props {
 }
 
 export function ProfileDialog(props: Props) {
+  const user = useUser()
+  const [firstName, setFirstName] = useState(user.first_name)
+
   return (
     <Dialog open={props.isOpen} onOpenChange={props.onOpenChange}>
       <DialogContent>
@@ -34,11 +40,16 @@ export function ProfileDialog(props: Props) {
           <label htmlFor="home-address" className="text-gray-400 text-sm mb-1">
             Votre prénom
           </label>
-          <Input />
+          <Input
+            defaultValue={user.first_name}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
           <DialogClose asChild>
             <div className="flex justify-end items-center gap-4">
               <Button variant="secondary">Annuler</Button>
-              <Button>Sauvegarder</Button>
+              <Button onClick={() => updateName({ firstName })}>
+                Sauvegarder
+              </Button>
             </div>
           </DialogClose>
         </div>

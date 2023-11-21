@@ -53,11 +53,6 @@ export function EditCommuteDialog() {
             Le temps de détour maximum
           </label>
           <Slider />
-
-          <ComboboxText onOpenProfileDialog={() => {}} />
-          <AddressPicker onChange={() => {}} />
-          <AddressPicker onChange={() => {}} />
-          <AddressPicker onChange={() => {}} />
           <DialogClose>
             <div className="flex justify-end items-center gap-4">
               <Button variant="secondary">Annuler</Button>
