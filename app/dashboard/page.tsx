@@ -41,7 +41,7 @@ export default function DashboardPage() {
 
       <div className="flex justify-center w-full rounded-3xl">
         <div className="flex flex-col w-[1000px] ">
-          <div className="text-3xl my-10 font-bold">{`Bonjour ${user.first_name}`}</div>
+          <div className="text-3xl my-10 font-bold">{`Bonjour ${user.name}`}</div>
           <div className="bg-[#f9f8f3] p-12 rounded-3xl  ">
             <div className="flex justify-between items-center mb-8">
               <p className="flex items-center text-2xl font-bold">

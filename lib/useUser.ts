@@ -4,7 +4,7 @@ import { supabase } from './supabase'
 export interface User {
   id: string
   email: string
-  first_name: string
+  name: string
   home_address: string
   destination_id: {
     id: string
@@ -20,7 +20,7 @@ export const useUser = () => {
   const [userData, setUserData] = useState<User>({
     id: '',
     email: '',
-    first_name: '',
+    name: '',
     home_address: '',
     destination_id: {
       id: '',

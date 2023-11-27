@@ -14,7 +14,6 @@ import { DialogClose } from '@radix-ui/react-dialog'
 import { useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 import { Switch } from './ui/switch'
 
 interface Props {
@@ -24,7 +23,7 @@ interface Props {
 
 export function ProfileDialog(props: Props) {
   const user = useUser()
-  const [firstName, setFirstName] = useState(user.first_name)
+  const [firstName, setFirstName] = useState(user.name)
 
   return (
     <Dialog open={props.isOpen} onOpenChange={props.onOpenChange}>
@@ -41,23 +40,17 @@ export function ProfileDialog(props: Props) {
             Prénom
           </label>
           <Input
-            defaultValue={user.first_name}
+            defaultValue={user.name}
             onChange={(e) => setFirstName(e.target.value)}
           />
           <label htmlFor="email" className="text-sm font-medium mb-2">
             Email
           </label>
-          <Input
-            defaultValue={user.first_name}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
+          <Input />
           <label htmlFor="email" className="text-sm font-medium mb-2">
             Numéro de téléphone
           </label>
-          <Input
-            defaultValue={user.first_name}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
+          <Input />
           <div className="w-full flex justify-between">
             <label htmlFor="email" className="text-sm font-medium mb-2">
               Afficher le numéro de téléphone
