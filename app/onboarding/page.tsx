@@ -2,8 +2,6 @@
 
 import { AddressPicker } from '@/components/AddressPicker'
 import { Logo } from '@/components/Logo'
-import { SetCommute } from '@/components/onboarding/SetCommute'
-import { SetDetour } from '@/components/onboarding/SetDetour'
 import { useOnboardingForm } from '@/components/onboarding/useOnboardingForm'
 import { Button } from '@/components/ui/button'
 import { Combobox } from '@/components/ui/combobox'
