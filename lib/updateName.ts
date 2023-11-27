@@ -11,7 +11,6 @@ export async function updateName({ firstName }: UpdateUserData) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  console.log(user)
   if (!user) {
     throw new Error('User must be logged in to update their details.')
   }
@@ -24,7 +23,6 @@ export async function updateName({ firstName }: UpdateUserData) {
     })
     .eq('id', '52096c32-cf91-4d96-b149-a0ded8e73436')
 
-  console.log(data, error)
   if (error) {
     throw error
   }

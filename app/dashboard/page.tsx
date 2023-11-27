@@ -1,13 +1,10 @@
 'use client'
 
-import { AddressPicker } from '@/components/AddressPicker'
 import { AppBar } from '@/components/AppBar'
 import { Badge } from '@/components/Badge'
 import { EditCommuteDialog } from '@/components/EditCommuteDialog'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { Combobox } from '@/components/ui/combobox'
-import { DocumentDuplicateIcon } from '@heroicons/react/24/outline'
 import {
   Dialog,
   DialogClose,
@@ -16,25 +13,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { useCarpoolMatches, type Match } from '@/lib/useCarpoolMatches'
 import { useUser } from '@/lib/useUser'
+import { DocumentDuplicateIcon } from '@heroicons/react/24/outline'
 import {
   BuildingOfficeIcon,
   ChatBubbleBottomCenterTextIcon,
   ClockIcon,
   HomeIcon,
 } from '@heroicons/react/24/solid'
-import { Slider } from '@radix-ui/react-slider'
 import { Car } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { matchMaking } from '@/lib/matchMaking'
-import { useEffect } from 'react'
-import { useUsersWithSameDestination } from '@/lib/useUsersWithSameDestination'
 
 export default function DashboardPage() {
   const user = useUser()
 
-  matchMaking(user)
-
+  const { matches, loading } = useCarpoolMatches(user)
   return (
     <div className="flex flex-col min-h-screen">
       <AppBar />
@@ -83,16 +77,15 @@ export default function DashboardPage() {
             <div className="text-2xl font-bold my-10">
               Mes collègues avec qui je peux covoiturer
             </div>
-            <div className="flex-col flex">
-              <Match />
-              <Match />
-              <Match />
-              <Match />
-              <Match />
-              <Match />
-              <Match />
-              <Match />
-            </div>
+            {loading ? (
+              <p>Chargement...</p>
+            ) : (
+              <div className="flex-col flex">
+                {matches.map((match: any) => (
+                  <Match key={match.userX.id} {...match} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -100,7 +93,7 @@ export default function DashboardPage() {
   )
 }
 
-function Match() {
+function Match(match: Match) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -112,25 +105,28 @@ function Match() {
               {/* <AvatarFallback>CN</AvatarFallback> */}
             </Avatar>
             <div>
-              <div>Baptiste</div>
+              <div>{match.userX.name}</div>
             </div>
           </div>
           <div className="flex gap-1">
+            <div>{match.canXPickA && <p>Vous êtes sur sa route</p>}</div>
             <div className="flex justify-center items-center h-6 w-6 bg-[#e9f5ff] rounded-lg">
               <Car width={16} color="black" />
             </div>
-            <Badge>+5 mn</Badge>
+            {match.canAPickX && (
+              <Badge>{'+' + match.additionalTimeForAtoPickX + 'mn'}</Badge>
+            )}
           </div>
           <ChatBubbleBottomCenterTextIcon width={24} />
         </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Contacter Baptister</DialogTitle>
+          <DialogTitle>{`Contacter ${match.userX.name}`}</DialogTitle>
           <DialogClose></DialogClose>
         </DialogHeader>
         <div className="flex justify-between">
-          <Input value="bhanriat@gmail.com" disabled />
+          <Input value={match.userX.email} disabled />
           {/* <Input value="06 06 87 78 78" disabled /> */}
           <Button variant="ghost" size="icon">
             <DocumentDuplicateIcon width={20} />

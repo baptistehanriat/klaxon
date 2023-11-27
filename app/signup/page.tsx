@@ -25,7 +25,6 @@ export default function SignupPage() {
       password,
     })
 
-    console.log(data, signUpError)
     if (signUpError) {
       setError(signUpError.message)
       setLoading(false)
