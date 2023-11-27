@@ -25,52 +25,49 @@ export function Combobox(props: {
 }) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState('')
-  const buttonRef = React.useRef<HTMLButtonElement>(null)
-  const [buttonWidth, setButtonWidth] = React.useState(0)
-
-  React.useEffect(() => {
-    if (buttonRef.current) {
-      setButtonWidth(buttonRef.current.getBoundingClientRect().width)
-    }
-  }, [buttonRef.current])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="secondary"
-          role="combobox"
-          aria-expanded={open}
-          className="justify-between bg-gray-100 w-full"
-          ref={buttonRef}
-        >
-          {value
-            ? props.options.find((option) => option.value === value)?.label
-            : 'Select option...'}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 " />
-        </Button>
+      <PopoverTrigger
+        role="combobox"
+        aria-expanded={open}
+        className={cn(
+          'justify-between flex h-12 w-full rounded-xl border-input  px-3 py-2 bg-gray-100 items-center',
+          open ? 'border-2 border-gray-800' : 'border-0',
+        )}
+      >
+        {value ? (
+          <p className="truncate text-sm">
+            {props.options.find((option) => option.value === value)?.label}
+          </p>
+        ) : (
+          <p className="truncate text-sm text-gray-400">
+            Sélectionner une agence...
+          </p>
+        )}
+        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 " />
       </PopoverTrigger>
-      <PopoverContent className="w-full">
+      <PopoverContent className="w-[336px]">
         <Command>
           <CommandInput placeholder="Rechercher agence" />
           <CommandEmpty>No option found.</CommandEmpty>
           <CommandGroup>
             {props.options.map((option) => (
               <CommandItem
-                key={option.value}
+                key={option.label}
                 value={option.value}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? '' : currentValue)
                   setOpen(false)
                 }}
               >
+                <p className="truncate">{option.label}</p>
                 <Check
                   className={cn(
                     'mr-2 h-4 w-4',
                     value === option.value ? 'opacity-100' : 'opacity-0',
                   )}
                 />
-                {option.label}
               </CommandItem>
             ))}
           </CommandGroup>

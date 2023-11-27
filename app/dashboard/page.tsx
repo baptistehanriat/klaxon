@@ -26,9 +26,15 @@ import {
 import { Slider } from '@radix-ui/react-slider'
 import { Car } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { matchMaking } from '@/lib/matchMaking'
+import { useEffect } from 'react'
+import { useUsersWithSameDestination } from '@/lib/useUsersWithSameDestination'
 
 export default function DashboardPage() {
   const user = useUser()
+
+  matchMaking(user)
+
   return (
     <div className="flex flex-col min-h-screen">
       <AppBar />
@@ -59,7 +65,7 @@ export default function DashboardPage() {
                 </div>
                 <div>
                   <p className="text-lg font-bold">Arrivée</p>
-                  <p className="text-sm ">{user.office_address}</p>
+                  <p className="text-sm ">{user.destination_id.name}</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 ">

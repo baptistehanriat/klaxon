@@ -28,8 +28,12 @@ export function AddressPicker({
     } else if (event.key === 'ArrowUp' && activeSuggestionIndex > 0) {
       setActiveSuggestionIndex((prev: number) => prev - 1)
     } else if (event.key === 'Enter' && activeSuggestionIndex > -1) {
-      setInputValue(suggestions[activeSuggestionIndex].fullAddress)
-      inputRef.current?.blur()
+      event.preventDefault()
+      const selectedSuggestion = suggestions[activeSuggestionIndex]?.fullAddress
+      if (selectedSuggestion) {
+        setInputValue(selectedSuggestion)
+        inputRef.current?.blur()
+      }
     } else if (event.key === 'Escape') {
       inputRef.current?.blur()
     }
@@ -51,24 +55,15 @@ export function AddressPicker({
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onFocus={() => setIsEditing(true)}
-        onBlur={() => {
-          setIsEditing(false)
-          onChange(inputValue)
-        }}
+        onBlur={() => setIsEditing(false)}
         onKeyDown={handleKeyDown}
         ref={inputRef}
-        aria-autocomplete="list"
-        aria-controls="suggestions-list"
-        aria-activedescendant={
-          activeSuggestionIndex > -1
-            ? suggestions[activeSuggestionIndex].fullAddress
-            : undefined
-        }
+        autoComplete="off"
       />
       {isEditing && suggestions.length > 0 && (
         <ul
           role="listbox"
-          className="absolute mt-3 rounded-md border bg-popover p-2 z-50"
+          className="w-full absolute mt-3 rounded-md border bg-popover p-2 z-50"
         >
           {suggestions.map((suggestion, index) => (
             <li
@@ -76,9 +71,7 @@ export function AddressPicker({
               role="option"
               aria-selected={index === activeSuggestionIndex}
               onMouseDown={(e) => {
-                e.preventDefault()
                 setInputValue(suggestion.fullAddress)
-                inputRef.current?.blur()
               }}
               className={cn(
                 'cursor-pointer p-2 rounded-md text-sm',

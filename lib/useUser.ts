@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabase'
 
-interface User {
+export interface User {
   id: string
   email: string
   first_name: string
   home_address: string
-  office_address: string
+  destination_id: {
+    id: string
+    address: string
+    name: string
+    coordinates: string
+  }
+  home_coordinates: string
   detour_max: number
 }
 
@@ -16,7 +22,13 @@ export const useUser = () => {
     email: '',
     first_name: '',
     home_address: '',
-    office_address: '',
+    destination_id: {
+      id: '',
+      address: '',
+      name: '',
+      coordinates: '',
+    },
+    home_coordinates: '',
     detour_max: 0,
   })
 
@@ -27,7 +39,7 @@ export const useUser = () => {
       if (user) {
         const { data, error } = await supabase
           .from('users')
-          .select('*')
+          .select('*, destination_id(*)')
           .eq('id', user.data.user?.id)
           .single()
 

@@ -2,24 +2,20 @@
 
 import {
   Dialog,
+  DialogBody,
   DialogContent,
-  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
-import { AddressPicker } from './AddressPicker'
-import { Combobox } from './ui/combobox'
-import { Slider } from './ui/slider'
-import { Button } from './ui/button'
-import { DialogClose } from '@radix-ui/react-dialog'
-import { UserCircleIcon } from '@heroicons/react/24/outline'
-
-import { DropdownMenuGroup, DropdownMenuItem } from './ui/dropdown-menu'
-import { Input } from './ui/input'
-import { useUser } from '@/lib/useUser'
-import { useState } from 'react'
 import { updateName } from '@/lib/updateName'
+import { useUser } from '@/lib/useUser'
+import { DialogClose } from '@radix-ui/react-dialog'
+import { useState } from 'react'
+import { Button } from './ui/button'
+import { Input } from './ui/input'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
+import { Switch } from './ui/switch'
 
 interface Props {
   isOpen: boolean
@@ -36,14 +32,52 @@ export function ProfileDialog(props: Props) {
         <DialogHeader>
           <DialogTitle>Votre profil</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-4">
-          <label htmlFor="home-address" className="text-gray-400 text-sm mb-1">
-            Votre prénom
+        <DialogBody className="min-h-[400px]">
+          <label htmlFor="profile-picture" className="text-sm font-medium mb-2">
+            Photo de profil
+          </label>
+          <div className="h-24 w-24 rounded-full bg-gray-100"></div>
+          <label htmlFor="full-name" className="text-sm font-medium mb-2">
+            Prénom
           </label>
           <Input
             defaultValue={user.first_name}
             onChange={(e) => setFirstName(e.target.value)}
           />
+          <label htmlFor="email" className="text-sm font-medium mb-2">
+            Email
+          </label>
+          <Input
+            defaultValue={user.first_name}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <label htmlFor="email" className="text-sm font-medium mb-2">
+            Numéro de téléphone
+          </label>
+          <Input
+            defaultValue={user.first_name}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <div className="w-full flex justify-between">
+            <label htmlFor="email" className="text-sm font-medium mb-2">
+              Afficher le numéro de téléphone
+            </label>
+            <Switch />
+          </div>
+          <div className="w-full flex justify-between">
+            <label htmlFor="email" className="text-sm font-medium mb-2">
+              Activer les notifications mails
+            </label>
+            <Switch />
+          </div>
+
+          <div>
+            <Button variant="destructive" size="sm">
+              Supprimer mon compte
+            </Button>
+          </div>
+        </DialogBody>
+        <DialogFooter>
           <DialogClose asChild>
             <div className="flex justify-end items-center gap-4">
               <Button variant="secondary">Annuler</Button>
@@ -52,7 +86,7 @@ export function ProfileDialog(props: Props) {
               </Button>
             </div>
           </DialogClose>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
