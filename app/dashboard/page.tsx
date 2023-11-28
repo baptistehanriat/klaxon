@@ -1,29 +1,16 @@
 'use client'
 
 import { AppBar } from '@/components/AppBar'
-import { Badge } from '@/components/Badge'
+import { ContactColleagueDialog } from '@/components/ContactColleagueDialog'
 import { EditCommuteDialog } from '@/components/EditCommuteDialog'
-import { Avatar } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
+import { MatchCard } from '@/components/MatchCard'
 import { useCarpoolMatches, type Match } from '@/lib/useCarpoolMatches'
 import { useUser } from '@/lib/useUser'
-import { DocumentDuplicateIcon } from '@heroicons/react/24/outline'
 import {
   BuildingOfficeIcon,
-  ChatBubbleBottomCenterTextIcon,
   ClockIcon,
   HomeIcon,
 } from '@heroicons/react/24/solid'
-import { Car } from 'lucide-react'
 
 export default function DashboardPage() {
   const user = useUser()
@@ -32,7 +19,7 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <AppBar />
-
+      <div className="h-0 w-0 border-b-[30px] border-l-[20px] border-r-[20px] border-b-black border-l-transparent border-r-transparent" />
       <div className="flex justify-center w-full rounded-3xl">
         <div className="flex flex-col w-[1000px] ">
           <div className="text-3xl my-10 font-bold">{`Bonjour ${user.name}`}</div>
@@ -95,44 +82,9 @@ export default function DashboardPage() {
 
 function Match(match: Match) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <div className="flex items-center justify-between rounded-2xl hover:bg-gray-50 p-4 cursor-pointer">
-          <div className="flex items-center gap-4">
-            <Avatar>
-              <p className="text-base font-bold">B</p>
-              {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
-              {/* <AvatarFallback>CN</AvatarFallback> */}
-            </Avatar>
-            <div>
-              <div>{match.userX.name}</div>
-            </div>
-          </div>
-          <div className="flex gap-1">
-            <div>{match.canXPickA && <p>Vous êtes sur sa route</p>}</div>
-            <div className="flex justify-center items-center h-6 w-6 bg-[#e9f5ff] rounded-lg">
-              <Car width={16} color="black" />
-            </div>
-            {match.canAPickX && (
-              <Badge>{'+' + match.additionalTimeForAtoPickX + 'mn'}</Badge>
-            )}
-          </div>
-          <ChatBubbleBottomCenterTextIcon width={24} />
-        </div>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{`Contacter ${match.userX.name}`}</DialogTitle>
-          <DialogClose></DialogClose>
-        </DialogHeader>
-        <div className="flex justify-between">
-          <Input value={match.userX.email} disabled />
-          {/* <Input value="06 06 87 78 78" disabled /> */}
-          <Button variant="ghost" size="icon">
-            <DocumentDuplicateIcon width={20} />
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <ContactColleagueDialog
+      trigger={<MatchCard match={match} />}
+      match={match}
+    />
   )
 }

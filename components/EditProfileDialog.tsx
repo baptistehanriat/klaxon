@@ -15,6 +15,7 @@ import { useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Switch } from './ui/switch'
+import { Separator } from './ui/separator'
 
 interface Props {
   isOpen: boolean
@@ -31,50 +32,57 @@ export function ProfileDialog(props: Props) {
         <DialogHeader>
           <DialogTitle>Votre profil</DialogTitle>
         </DialogHeader>
-        <DialogBody className="min-h-[400px]">
-          <label htmlFor="profile-picture" className="text-sm font-medium mb-2">
-            Photo de profil
-          </label>
-          <div className="h-24 w-24 rounded-full bg-gray-100"></div>
-          <label htmlFor="full-name" className="text-sm font-medium mb-2">
-            Prénom
-          </label>
-          <Input
-            defaultValue={user.name}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-          <label htmlFor="email" className="text-sm font-medium mb-2">
-            Email
-          </label>
-          <Input />
-          <label htmlFor="email" className="text-sm font-medium mb-2">
-            Numéro de téléphone
-          </label>
-          <Input />
-          <div className="w-full flex justify-between">
+        <DialogBody className="min-h-[400px] p-0">
+          <form className="flex flex-col p-4 pt-4">
+            <label
+              htmlFor="profile-picture"
+              className="text-sm font-medium mb-2"
+            >
+              Photo de profil
+            </label>
+            <div className="h-24 w-24 rounded-full bg-gray-100 mb-4"></div>
+            <label htmlFor="full-name" className="text-sm font-medium mb-2">
+              Prénom
+            </label>
+            <Input
+              defaultValue={user.name}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="mb-4"
+            />
+            <label htmlFor="email" className="text-sm font-medium mb-2">
+              Email
+            </label>
+            <Input className="mb-4" />
+            <label htmlFor="email" className="text-sm font-medium mb-2">
+              Numéro de téléphone
+            </label>
+            <Input />
+          </form>
+          <div className="w-full flex justify-between items-center px-4 pb-2">
             <label htmlFor="email" className="text-sm font-medium mb-2">
               Afficher le numéro de téléphone
             </label>
             <Switch />
           </div>
-          <div className="w-full flex justify-between">
+          <div className="w-full flex justify-between items-center px-4">
             <label htmlFor="email" className="text-sm font-medium mb-2">
               Activer les notifications mails
             </label>
             <Switch />
           </div>
-
-          <div>
-            <Button variant="destructive" size="sm">
-              Supprimer mon compte
-            </Button>
+          <div className="p-4">
+            <button className="text-sm text-red-500">
+              Supprimer le compte
+            </button>
           </div>
         </DialogBody>
         <DialogFooter>
           <DialogClose asChild>
-            <div className="flex justify-end items-center gap-4">
-              <Button variant="secondary">Annuler</Button>
-              <Button onClick={() => updateName({ firstName })}>
+            <div className="flex justify-end items-center gap-3">
+              <Button size="sm" variant="secondary">
+                Annuler
+              </Button>
+              <Button size="sm" onClick={() => updateName({ firstName })}>
                 Sauvegarder
               </Button>
             </div>

@@ -114,21 +114,6 @@ const useOnboardingForm = () => {
     return isValid
   }
 
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault()
-      event.returnValue = '' // A string is required for cross-browser compatibility
-    }
-
-    window.addEventListener('beforeunload', handleBeforeUnload)
-    // window.addEventListener('popstate', handleNavigation)
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-      // window.removeEventListener('popstate', handleNavigation)
-    }
-  }, [])
-
   return {
     data,
     setFieldValue,

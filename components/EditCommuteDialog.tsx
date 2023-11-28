@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogBody,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -63,7 +64,7 @@ export function EditCommuteDialog() {
                 Durée maximale du détour que je peux faire pour rejoindre un
                 co-voitureur.
               </p>
-              <div className="flex gap-4">
+              <div className="flex gap-4 mb-4">
                 <Slider
                   id="detour"
                   name="detour"
@@ -79,13 +80,18 @@ export function EditCommuteDialog() {
                 </p>
               </div>
             </div>
-            <DialogClose asChild>
-              <Button className="mt-5 w-full" onClick={() => {}}>
-                Modifier
-              </Button>
-            </DialogClose>
           </form>
         </DialogBody>
+        <DialogFooter>
+          <DialogClose asChild>
+            <div className="flex justify-end items-center gap-3">
+              <Button size="sm" variant="secondary">
+                Annuler
+              </Button>
+              <Button size="sm">Sauvegarder</Button>
+            </div>
+          </DialogClose>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
