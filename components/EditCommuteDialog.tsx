@@ -1,25 +1,56 @@
-'use client'
-
+import { Database } from '@/lib/types'
+import {
+  createServerActionClient,
+  createServerComponentClient,
+} from '@supabase/auth-helpers-nextjs'
+import { revalidatePath } from 'next/cache'
+import { cookies } from 'next/headers'
+import { AdditionnalTimeSlider } from './AdditionalTimeSlider'
+import { AddressPicker } from './AddressPicker'
+import { Button } from './ui/button'
+import { Combobox } from './ui/combobox'
 import {
   Dialog,
   DialogBody,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { useOfficeAddresses } from '@/lib/useOfficeAddresses'
-import { DialogClose } from '@radix-ui/react-dialog'
-import { AddressPicker } from './AddressPicker'
-import { useOnboardingForm } from './onboarding/useOnboardingForm'
-import { Button } from './ui/button'
-import { Combobox } from './ui/combobox'
-import { Slider } from './ui/slider'
+} from './ui/dialog'
 
-export function EditCommuteDialog() {
-  const { data, setFieldValue, currentStep, onSubmit } = useOnboardingForm()
-  const { officeAddresses, loading, error } = useOfficeAddresses()
+export async function EditCommuteDialog() {
+  // const { data, setFieldValue, currentStep, onSubmit } = useOnboardingForm()
+  // const { officeAddresses, loading, error } = useOfficeAddresses()
+  const supabase = createServerComponentClient<Database>({ cookies })
+
+  const userSession = await supabase.auth.getSession()
+  const userId = userSession?.data.session?.user.id
+
+  const { data: userData } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', userId!)
+    .single()
+
+  const offices = await supabase.from('offices').select('*')
+
+  const updateProfile = async (formData: FormData) => {
+    'use server'
+    const name = String(formData.get('home-address'))
+    const detour = Number(formData.get('detour'))
+    const homeAddress = String(formData.get('home-address-data'))
+
+    console.log('name', homeAddress)
+    const supabase = createServerActionClient<Database>({ cookies })
+    const { data } = await supabase.auth.getUser()
+    await supabase
+      .from('users')
+      .update({ home_address: name, detour_max: detour })
+      .eq('id', data.user?.id || '')
+    revalidatePath('/')
+  }
 
   return (
     <Dialog>
@@ -31,16 +62,13 @@ export function EditCommuteDialog() {
           <DialogTitle>Modifier mon trajet</DialogTitle>
           <DialogClose></DialogClose>
         </DialogHeader>
-        <DialogBody>
-          <form className="w-full flex flex-col gap-8">
+        <form className="w-full flex flex-col gap-8" action={updateProfile}>
+          <DialogBody>
             <div className="flex flex-col gap-2">
               <label htmlFor="home-address" className="text-sm font-semibold">
                 Adresse de départ
               </label>
-              <AddressPicker
-                errorMessage={data.homeAddress.errorMessage}
-                onChange={() => {}}
-              />
+              <AddressPicker defaultValue={userData?.home_address || ''} />
             </div>
 
             <div className="flex flex-col gap-2">
@@ -48,11 +76,12 @@ export function EditCommuteDialog() {
                 Agence de destination
               </label>
               <Combobox
-                onChange={() => {}}
-                options={officeAddresses.map((address) => ({
-                  value: address.id,
-                  label: address.address,
-                }))}
+                options={
+                  offices?.data?.map((address) => ({
+                    value: address.id,
+                    label: address.address,
+                  })) || []
+                }
               />
             </div>
 
@@ -64,34 +93,22 @@ export function EditCommuteDialog() {
                 Durée maximale du détour que je peux faire pour rejoindre un
                 co-voitureur.
               </p>
-              <div className="flex gap-4 mb-4">
-                <Slider
-                  id="detour"
-                  name="detour"
-                  value={[data.detour.value]}
-                  onValueChange={(value) => setFieldValue('detour', value[0])}
-                  step={5}
-                  min={5}
-                  max={60}
-                  className="w-full flex-3"
-                />
-                <p className="w-full flex-1 text-base font-bold">
-                  {data.detour.value}mn
-                </p>
+              <AdditionnalTimeSlider initialValue={userData?.detour_max || 0} />
+            </div>
+          </DialogBody>
+          <DialogFooter>
+            <DialogClose asChild>
+              <div className="flex justify-end items-center gap-3">
+                <Button size="sm" variant="secondary">
+                  Annuler
+                </Button>
+                <Button type="submit" size="sm">
+                  Sauvegarder
+                </Button>
               </div>
-            </div>
-          </form>
-        </DialogBody>
-        <DialogFooter>
-          <DialogClose asChild>
-            <div className="flex justify-end items-center gap-3">
-              <Button size="sm" variant="secondary">
-                Annuler
-              </Button>
-              <Button size="sm">Sauvegarder</Button>
-            </div>
-          </DialogClose>
-        </DialogFooter>
+            </DialogClose>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   )

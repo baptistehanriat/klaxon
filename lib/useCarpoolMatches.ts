@@ -55,7 +55,7 @@ export function useCarpoolMatches(user: User) {
     }
 
     fetchMatchMaking()
-  }, [user])
+  }, [user, usersWithSameDestination])
 
   return { matches, loading, error }
 }

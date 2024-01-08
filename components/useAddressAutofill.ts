@@ -2,14 +2,16 @@
 import { useState, useCallback } from 'react'
 import axios from 'axios'
 
-interface Suggestion {
+export type Suggestion = {
   fullAddress: string
   id: string
+  coordinates: string
 }
 
 interface UseAddressAutofillReturn {
   suggestions: Suggestion[]
   autofill: (query: string) => Promise<void>
+  clearSuggestions: () => void
 }
 
 export const useAddressAutofill = (): UseAddressAutofillReturn => {
@@ -33,6 +35,7 @@ export const useAddressAutofill = (): UseAddressAutofillReturn => {
         response.data.features.map((feature: any) => ({
           fullAddress: feature.place_name,
           id: feature.id,
+          coordinates: feature.center.join(','),
         })),
       )
     } catch (error) {
@@ -43,5 +46,6 @@ export const useAddressAutofill = (): UseAddressAutofillReturn => {
   return {
     suggestions,
     autofill,
+    clearSuggestions: () => setSuggestions([]),
   }
 }

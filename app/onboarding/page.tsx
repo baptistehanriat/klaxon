@@ -25,10 +25,10 @@ export default function OnboardingPage() {
               <label htmlFor="home-address" className="text-base font-semibold">
                 Adresse de départ
               </label>
-              <AddressPicker
+              {/* <AddressPicker
                 errorMessage={data.homeAddress.errorMessage}
                 onChange={() => {}}
-              />
+              /> */}
             </div>
 
             <div className="flex flex-col gap-2">

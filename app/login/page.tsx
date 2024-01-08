@@ -7,14 +7,25 @@ import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { useState } from 'react'
-import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
+  const supabase = createClientComponentClient()
+  const handleSignIn = async () => {
+    const session = await supabase.auth.signInWithPassword({
+      email: 'bhanriat@gmail.com',
+      password: 'Passw0rd!',
+    })
+    if (!session.error) {
+      router.push('/dashboard')
+      router.refresh()
+    }
+    console.log(session)
+  }
   return (
     <section className="relative flex flex-col sm:min-h-screen max-h-screen justify-center items-center px-6 pt-16 sm:p-0">
       <main className="flex flex-col w-full sm:max-w-[336px] items-center">
@@ -54,18 +65,7 @@ export default function LoginPage() {
           <Link className="text-xs text-indigo-500 mt-1" href="/help">
             Mot de passe oublié ?{' '}
           </Link>
-          <Button
-            className="w-full mt-5"
-            onClick={async () => {
-              const { data, error } = await supabase.auth.signInWithPassword({
-                email,
-                password,
-              })
-              if (!error) {
-                router.push('/dashboard')
-              }
-            }}
-          >
+          <Button className="w-full mt-5" onClick={handleSignIn}>
             Se connecter
           </Button>
         </div>

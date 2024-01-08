@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { supabase } from './supabase'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useEffect, useState } from 'react'
 
 export interface User {
   id: string
@@ -31,6 +31,8 @@ export const useUser = () => {
     home_coordinates: '',
     detour_max: 0,
   })
+
+  const supabase = createClientComponentClient()
 
   useEffect(() => {
     const fetchUserData = async () => {

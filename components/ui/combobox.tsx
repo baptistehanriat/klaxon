@@ -21,7 +21,7 @@ import {
 
 export function Combobox(props: {
   options: { value: string; label: string }[]
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
 }) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState('')

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { User } from './useUser'
 import { supabase } from './supabase'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export function useUsersWithSameDestination({
   destinationId,
@@ -13,6 +14,8 @@ export function useUsersWithSameDestination({
     User[]
   >([])
 
+  const supabase = createClientComponentClient()
+
   useEffect(() => {
     const fetchUsersWithSameDestination = async () => {
       if (userId && destinationId) {
@@ -22,6 +25,7 @@ export function useUsersWithSameDestination({
           .neq('id', userId)
           .eq('destination_id', destinationId)
 
+        console.log('data', data)
         if (error) {
           console.error('error', error)
         } else {

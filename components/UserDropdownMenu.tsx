@@ -1,29 +1,19 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-// import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid'
-import Link from 'next/link'
-import { EditCommuteDialog } from './EditCommuteDialog'
-import { ProfileDialog } from './EditProfileDialog'
 import {
+  Bars3Icon,
   QuestionMarkCircleIcon,
   UserCircleIcon,
-  ArrowRightOnRectangleIcon,
-  Bars3Icon,
 } from '@heroicons/react/24/outline'
-import { Separator } from '@/components/ui/separator'
+import Link from 'next/link'
+import { SignOutMenuItem } from './SignOutMenuItem'
 
-export function UserMenu({
-  onOpenProfileDialog,
-}: {
-  onOpenProfileDialog: VoidFunction
-}) {
+export async function UserDropdownMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,26 +27,19 @@ export function UserMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[180px]">
         <div className="flex gap-2 flex-col ">
-          <DropdownMenuItem
-            onClick={onOpenProfileDialog}
-            className="flex gap-3 mt-2 mx-2"
-          >
-            <UserCircleIcon width={20} />
-            Compte
+          <DropdownMenuItem className="mx-2">
+            <Link href="/account" className="flex gap-3 ">
+              <UserCircleIcon width={20} />
+              Mon compte
+            </Link>
           </DropdownMenuItem>
-          <Separator />
           <DropdownMenuItem className="mx-2">
             <Link href="/help" className="flex gap-3 ">
               <QuestionMarkCircleIcon width={20} />
               Centre d'aide
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className="mx-2 mb-2">
-            <Link href="/login" className="flex gap-3">
-              <ArrowRightOnRectangleIcon width={20} />
-              Se déconnecter
-            </Link>
-          </DropdownMenuItem>
+          <SignOutMenuItem />
         </div>
       </DropdownMenuContent>
     </DropdownMenu>
