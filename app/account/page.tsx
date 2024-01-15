@@ -11,6 +11,8 @@ import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Separator } from '@/components/ui/separator'
+import { StickyAppBar } from '@/components/StickyAppBar'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 
 export default async function AccountPage() {
   const supabase = createServerComponentClient<Database>({ cookies })
@@ -26,8 +28,8 @@ export default async function AccountPage() {
 
   const updateProfile = async (formData: FormData) => {
     'use server'
-    const name = String(formData.get('name'))
-    const phone_number = String(formData.get('phone_number'))
+    const name = String(formData.get('full-name'))
+    const phone_number = String(formData.get('phone-number'))
     const email = String(formData.get('email'))
 
     const supabase = createServerActionClient<Database>({ cookies })
@@ -40,23 +42,21 @@ export default async function AccountPage() {
   }
 
   return (
-    <div className="flex justify-center w-full h-screen flex-col items-center absolute">
-      <Button
-        asChild
-        variant="outline"
-        size="icon"
-        className="absolute top-5 left-5"
-      >
-        <Link href="/dashboard">
-          <XMarkIcon className="h-4 w-4" />
-        </Link>
-      </Button>
-      <Separator />
+    <div className="flex w-full h-screen flex-col items-center relative gap-10 ">
+      <StickyAppBar>
+        <div className="flex flex-col">
+          <Button asChild variant="outline" size="icon">
+            <Link href="/dashboard">
+              <XMarkIcon className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </StickyAppBar>
 
       <div>
         <div className="flex flex-col justify-start w-full">
           <span className="text-2xl font-bold">{`Bienvenue ${user?.name} 👋`}</span>
-          <span className="text-sm text-gray-600">
+          <span className="text-sm text-gray-500 mt-1 mb-3">
             Configurer votre profil Klaxon
           </span>
         </div>
@@ -69,38 +69,49 @@ export default async function AccountPage() {
             >
               Photo de profil
             </label>
-            <div className="h-24 w-24 rounded-full bg-gray-100 mb-4"></div>
+            <Avatar className="w-24 h-24 mb-4">
+              <AvatarImage src={user?.avatar_url || ''} />
+              <AvatarFallback>BH</AvatarFallback>
+            </Avatar>
             <label htmlFor="full-name" className="text-sm font-medium mb-2">
               Prénom
             </label>
             <Input
-              name="name"
+              name="full-name"
               className="mb-4"
               defaultValue={user?.name || ''}
             />
             <label htmlFor="email" className="text-sm font-medium mb-2">
               Email
             </label>
-            <Input className="mb-4" defaultValue={user?.email || ''} />
-            <label htmlFor="email" className="text-sm font-medium mb-2">
+            <Input
+              className="mb-4"
+              defaultValue={user?.email || ''}
+              name="email"
+            />
+            <label htmlFor="phone-number" className="text-sm font-medium mb-2">
               Numéro de téléphone
             </label>
-            <Input defaultValue={user?.phone_number || ''} />
+            <Input
+              name="phone-number"
+              defaultValue={user?.phone_number || ''}
+            />
           </div>
-          <div className="w-full flex justify-between items-center px-4 pb-2">
+          <div className="w-full flex justify-between items-center my-8">
             <label htmlFor="email" className="text-sm font-medium mb-2">
               Afficher le numéro de téléphone
             </label>
             <Switch defaultChecked={user?.display_phone_number} />
           </div>
-          <div className="p-4">
-            <button className="text-sm text-red-500">
-              Supprimer le compte
-            </button>
-          </div>
 
-          <Button size="sm">Sauvegarder</Button>
+          <Button size="sm" type="submit">
+            Sauvegarder
+          </Button>
         </form>
+
+        <div className="mt-10 ">
+          <button className="text-sm text-red-500">Supprimer le compte</button>
+        </div>
       </div>
     </div>
   )

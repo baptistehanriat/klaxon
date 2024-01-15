@@ -9,6 +9,7 @@ import { ChevronLeft } from 'lucide-react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { MicrosoftIcon } from '@/components/MicrosoftIcon'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -73,6 +74,15 @@ export default function LoginPage() {
         <div></div>
         <Button asChild variant="secondary" className="w-full">
           <Link href="/signup">Première connexion</Link>
+        </Button>
+
+        <Button
+          className="w-full mt-5 flex gap-6"
+          onClick={handleSignIn}
+          variant="outline"
+        >
+          <MicrosoftIcon />
+          Se connecter avec microsoft
         </Button>
       </main>
     </section>

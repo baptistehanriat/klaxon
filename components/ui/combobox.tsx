@@ -21,7 +21,7 @@ import {
 
 export function Combobox(props: {
   options: { value: string; label: string }[]
-  onChange?: (value: string) => void
+  defaultValue: string
 }) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState('')
@@ -49,7 +49,10 @@ export function Combobox(props: {
       </PopoverTrigger>
       <PopoverContent className="w-[336px]">
         <Command>
-          <CommandInput placeholder="Rechercher agence" />
+          <CommandInput
+            placeholder="Rechercher agence"
+            defaultValue={props.defaultValue}
+          />
           <CommandEmpty>No option found.</CommandEmpty>
           <CommandGroup>
             {props.options.map((option) => (

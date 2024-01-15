@@ -19,6 +19,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from './ui/dialog'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select'
+import { SelectOffice } from './SelectOffice'
 
 export async function EditCommuteDialog() {
   // const { data, setFieldValue, currentStep, onSubmit } = useOnboardingForm()
@@ -41,29 +49,36 @@ export async function EditCommuteDialog() {
     const name = String(formData.get('home-address'))
     const detour = Number(formData.get('detour'))
     const homeAddress = String(formData.get('home-address-data'))
+    const office = String(formData.get('office'))
 
     console.log('name', homeAddress)
     const supabase = createServerActionClient<Database>({ cookies })
     const { data } = await supabase.auth.getUser()
     await supabase
       .from('users')
-      .update({ home_address: name, detour_max: detour })
+      .update({
+        home_address: name,
+        detour_max: detour,
+        destination_id: office,
+      })
       .eq('id', data.user?.id || '')
     revalidatePath('/')
   }
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <p className="text-sm">Modifier mon trajet</p>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="text-sm">
+          Modifier
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Modifier mon trajet</DialogTitle>
+          <DialogTitle>Modifier le trajet</DialogTitle>
           <DialogClose></DialogClose>
         </DialogHeader>
         <form className="w-full flex flex-col gap-8" action={updateProfile}>
-          <DialogBody>
+          <DialogBody className="flex flex-col gap-8">
             <div className="flex flex-col gap-2">
               <label htmlFor="home-address" className="text-sm font-semibold">
                 Adresse de départ
@@ -75,11 +90,12 @@ export async function EditCommuteDialog() {
               <label className="text-sm font-semibold">
                 Agence de destination
               </label>
-              <Combobox
-                options={
+              <SelectOffice
+                defaultValue={userData?.destination_id || ''}
+                offices={
                   offices?.data?.map((address) => ({
                     value: address.id,
-                    label: address.address,
+                    label: address.name,
                   })) || []
                 }
               />
@@ -99,7 +115,7 @@ export async function EditCommuteDialog() {
           <DialogFooter>
             <DialogClose asChild>
               <div className="flex justify-end items-center gap-3">
-                <Button size="sm" variant="secondary">
+                <Button size="sm" variant="outline">
                   Annuler
                 </Button>
                 <Button type="submit" size="sm">

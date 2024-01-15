@@ -19,7 +19,7 @@ export function AdditionnalTimeSlider({
         onValueChange={(value) => setValue(value[0])}
         step={5}
         min={5}
-        max={60}
+        max={30}
         className="w-full flex-3"
       />
       <p className="w-full flex-1 text-base font-bold">{value}mn</p>

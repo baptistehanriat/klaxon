@@ -14,6 +14,9 @@ export interface User {
   }
   home_coordinates: string
   detour_max: number
+  avatar_url: string
+  phone_number: string
+  display_phone_number: boolean
 }
 
 export const useUser = () => {
@@ -30,6 +33,9 @@ export const useUser = () => {
     },
     home_coordinates: '',
     detour_max: 0,
+    avatar_url: '',
+    phone_number: '',
+    display_phone_number: false,
   })
 
   const supabase = createClientComponentClient()

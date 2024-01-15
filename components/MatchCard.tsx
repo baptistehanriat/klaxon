@@ -1,48 +1,89 @@
 'use client'
 
-import { Badge } from '@/components/Badge'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { type Match } from '@/lib/useCarpoolMatches'
 import {
   ArrowLongRightIcon,
-  BuildingOfficeIcon,
+  ArrowPathRoundedSquareIcon,
   EllipsisHorizontalIcon,
 } from '@heroicons/react/24/outline'
-import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
-import { Car } from 'lucide-react'
 
-export function MatchCard({ match }: { match: Match }) {
+import { BuildingOfficeIcon } from '@heroicons/react/24/solid'
+
+import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'
+
+import { twc } from 'react-twc'
+
+export function MatchCard({
+  match,
+  userAvatarUrl,
+}: {
+  match: Match
+  userAvatarUrl: string
+}) {
   return (
-    <div className="flex items-center justify-between rounded-2xl hover:bg-gray-50 p-4 cursor-pointer">
-      <div className="flex items-center gap-4">
+    <div className="flex items-center rounded-2xl hover:bg-gray-50 p-4 cursor-pointer">
+      <div className="flex items-center gap-4 min-w-[200px]">
         <Avatar>
-          <AvatarImage src="https://ui-avatars.com/api/?name=John+Doe" />
-          {/* <AvatarFallback>CN</AvatarFallback> */}
+          <AvatarImage src={match.userX.avatar_url} />
+          <AvatarFallback>CN</AvatarFallback>
         </Avatar>
 
-        <div>
-          <div>{match.userX.name}</div>
-        </div>
-        <div className="flex gap-2">
-          <Avatar className="h-6 w-6">
-            <AvatarImage src="https://github.com/shadcn.png" />
-          </Avatar>
-          <EllipsisHorizontalIcon width={24} />
-          <Avatar className="h-6 w-6"></Avatar>
-          <EllipsisHorizontalIcon width={24} />
-          <BuildingOfficeIcon width={24} />
-        </div>
+        <div className="text-md font-semibold">{match.userX.name}</div>
       </div>
-      <div className="flex gap-1">
-        <div>{match.canXPickA && <p>Vous êtes sur sa route</p>}</div>
-        <div className="flex justify-center items-center h-6 w-6 bg-[#e9f5ff] rounded-lg">
-          <Car width={16} color="black" />
-        </div>
+      <div className="flex gap-2 justify-start w-[800px]">
+        {match.canXPickA && !match.canAPickX && (
+          <>
+            <Avatar className="h-6 w-6">
+              <AvatarImage src={match.userX.avatar_url} />
+            </Avatar>
+            <EllipsisHorizontalIcon width={24} />
+            <Avatar className="h-6 w-6">
+              <AvatarImage src={userAvatarUrl} />
+            </Avatar>
+            <EllipsisHorizontalIcon width={24} />
+            <BuildingOfficeIcon width={24} />
+          </>
+        )}
+
+        {match.canAPickX && !match.canXPickA && (
+          <>
+            <Avatar className="h-6 w-6">
+              <AvatarImage src={userAvatarUrl} />
+            </Avatar>
+            <EllipsisHorizontalIcon width={24} />
+            <Avatar className="h-6 w-6">
+              <AvatarImage src={match.userX.avatar_url} />
+            </Avatar>
+            <EllipsisHorizontalIcon width={24} />
+            <BuildingOfficeIcon width={24} />
+          </>
+        )}
+
+        {match.canAPickX && match.canXPickA && (
+          <>
+            <Avatar className="h-6 w-6">
+              <AvatarImage src={userAvatarUrl} />
+            </Avatar>
+            <ArrowPathRoundedSquareIcon width={24} />
+            <Avatar className="h-6 w-6">
+              <AvatarImage src={match.userX.avatar_url} />
+            </Avatar>
+            <EllipsisHorizontalIcon width={24} />
+            <BuildingOfficeIcon width={24} />
+          </>
+        )}
+      </div>
+      <div className="flex gap-1 ">
         {match.canAPickX && (
           <Badge>{'+' + match.additionalTimeForAtoPickX + 'mn'}</Badge>
         )}
       </div>
-      <ChatBubbleBottomCenterTextIcon width={24} />
+      <div className="flex  justify-end w-full">
+        <ChatBubbleBottomCenterTextIcon width={24} />
+      </div>
     </div>
   )
 }
+
+const Badge = twc.div`flex justify-between px-2.5 py-0.5 items-center text-xs font-semibold bg-gray-200 rounded-lg`

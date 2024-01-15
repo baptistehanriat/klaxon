@@ -26,6 +26,7 @@ export function useCarpoolMatches(user: User) {
 
       if (usersWithSameDestination.length === 0) {
         setLoading(false)
+        setMatches([])
         return
       }
 

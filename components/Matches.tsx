@@ -3,21 +3,27 @@
 import { useCarpoolMatches, type Match } from '@/lib/useCarpoolMatches'
 import { ContactColleagueDialog } from './ContactColleagueDialog'
 import { MatchCard } from './MatchCard'
+import { Separator } from './ui/separator'
 
 export function Matches({ user }: { user: any }) {
   const { matches, loading } = useCarpoolMatches(user)
 
   return (
     <div className="w-full">
-      <div className="text-2xl font-bold my-10">
-        Mes collègues avec qui je peux covoiturer
+      <div className="text-xl font-bold mt-10">
+        Les personnes qui partagent votre trajet
       </div>
+      <Separator className="my-2" />
       {loading ? (
         <p>Chargement...</p>
       ) : (
         <div className="flex-col flex">
           {matches.map((match: any) => (
-            <Match key={match.userX.id} {...match} />
+            <Match
+              key={match.userX.id}
+              match={match}
+              userAvatarUrl={user.avatar_url}
+            />
           ))}
         </div>
       )}
@@ -25,10 +31,16 @@ export function Matches({ user }: { user: any }) {
   )
 }
 
-function Match(match: Match) {
+function Match({
+  match,
+  userAvatarUrl,
+}: {
+  match: Match
+  userAvatarUrl: string
+}) {
   return (
     <ContactColleagueDialog
-      trigger={<MatchCard match={match} />}
+      trigger={<MatchCard match={match} userAvatarUrl={userAvatarUrl} />}
       match={match}
     />
   )

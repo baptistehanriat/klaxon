@@ -15,7 +15,7 @@ export function SignOutMenuItem() {
   }
 
   return (
-    <DropdownMenuItem className="mx-2 mb-2" onClick={handleSignOut}>
+    <DropdownMenuItem onClick={handleSignOut} className="flex gap-3">
       <ArrowRightOnRectangleIcon width={20} />
       Se déconnecter
     </DropdownMenuItem>
