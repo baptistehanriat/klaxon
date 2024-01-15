@@ -14,7 +14,12 @@ export function Matches({ user }: { user: any }) {
         Les personnes qui partagent votre trajet
       </div>
       <Separator className="my-2" />
-      {loading ? (
+      {matches.length === 0 ? (
+        <div className="w-full flex mt-10 text-center text-lg flex-col">
+          Aucune personne ne partage votre trajet pour le moment. Revenez plus
+          tard !
+        </div>
+      ) : loading ? (
         <p>Chargement...</p>
       ) : (
         <div className="flex-col flex">
