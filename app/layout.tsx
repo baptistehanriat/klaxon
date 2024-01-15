@@ -13,7 +13,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      {process.env.NODE_ENV === 'production' ? (
+        <div>Work in progress</div>
+      ) : (
+        <body>{children}</body>
+      )}
     </html>
   )
 }
