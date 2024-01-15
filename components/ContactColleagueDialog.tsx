@@ -34,7 +34,7 @@ export function ContactColleagueDialog({
                 <DocumentDuplicateIcon width={20} />
               </button>
 
-              {match.userX.phone_number && (
+              {match.userX.display_phone_number && (
                 <button className="w-full flex gap-3 justify-between font-medium text-base items-center rounded-xl px-4 py-2 bg-gray-100 hover:bg-gray-200 active:bg-gray-300">
                   {match.userX.phone_number}
                   <DocumentDuplicateIcon width={20} />
