@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { env } from 'process'
 
 export const metadata: Metadata = {
   title: 'Klaxon - Carpooling with colleagues made easy',
@@ -13,7 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      {env.NODE_ENV === 'production' ? (
+        <div>Work in Progress</div>
+      ) : (
+        <body>{children}</body>
+      )}
     </html>
   )
 }
