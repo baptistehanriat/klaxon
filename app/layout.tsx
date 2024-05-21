@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {env.NODE_ENV === 'test' ? (
+      {env.NODE_ENV === 'production' ? (
         <div>Work in Progress</div>
       ) : (
         <body>{children}</body>
